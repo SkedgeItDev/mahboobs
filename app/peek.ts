@@ -14,3 +14,9 @@ export function faceVisible(t:Tile,board:Tile[],peeks:PeekPositions){
  const covers=board.filter(b=>b.z>t.z&&Math.abs(b.x-t.x)<1&&Math.abs(b.y-t.y)<1);
  return covers.length>0&&covers.every(b=>{const p=peeks[b.key];return p&&Math.hypot(p.x,p.y)>=CONFIG.peekRevealMinimum});
 }
+// Inspection remembers one concealed face; peeking never permanently unmasks the board.
+export function inspectionAfterPeek(board:Tile[],peeks:PeekPositions,previous:number|null){
+ const exposed=board.filter(t=>t.hidden&&!free(t,board)&&faceVisible(t,board,peeks)).sort((a,b)=>b.z-a.z);
+ return exposed[0]?.key??previous;
+}
+export function inspectedFaceVisible(t:Tile,board:Tile[],inspected:number|null){return !t.hidden||free(t,board)||t.key===inspected}
