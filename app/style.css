@@ -5,7 +5,7 @@
 
 .stats>div{width:50%}.speed-reward{border:1px solid #9e8c6155;border-radius:10px;padding:16px;margin-bottom:22px;background:#14251c}.speed-reward p{margin:10px 0 0}
 
-.board{isolation:isolate}.tile{background:#f5efe0;box-shadow:0 4px 0 #a59b83,0 7px 7px #00120990;opacity:1}.tile.free{border:2px solid #e8b963;box-shadow:0 4px 0 #a48a5b,0 0 0 1px #ffdda16b,0 7px 7px #00120990}.tile.blocked{filter:none}.tile.inspectable{touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:grab}.tile.peeking{cursor:grabbing;transition:none;box-shadow:0 6px 0 #a59b83,0 14px 20px #00120980}.tile img{pointer-events:none}.tile:not(.peeking){transition:transform .18s ease}.tile.blocked:disabled{cursor:default}.slot .tile{border:1px solid #e7cf97}.table-note{pointer-events:none}
+.board{isolation:isolate}.tile{background:#f5efe0;box-shadow:0 4px 0 #a59b83,0 7px 7px #00120990;opacity:1}.tile.free{border:2px solid #e8b963;box-shadow:0 4px 0 #a48a5b,0 0 0 1px #ffdda16b,0 7px 7px #00120990}.tile.blocked{filter:none}.tile.inspectable{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:grab}.tile.peeking{cursor:grabbing;transition:none;box-shadow:0 6px 0 #a59b83,0 14px 20px #00120980}.tile img{pointer-events:none}.tile:not(.peeking){transition:transform .18s ease}.tile.blocked:disabled{cursor:default}.slot .tile{border:1px solid #e7cf97}.table-note{pointer-events:none}
 
 /* The play surface fills the dynamic viewport; only overlays may scroll. */
 html,body{height:100%;overflow:hidden;overscroll-behavior:none}

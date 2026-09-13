@@ -1,5 +1,6 @@
-// A horizontal gesture must exceed the touch slop before it becomes a peek.
+// Any-direction movement must exceed touch slop before becoming a peek.
 export function peekOffset(dx:number,dy:number,width:number,dragging:boolean){
- const active=dragging||(Math.abs(dx)>=8&&Math.abs(dx)>Math.abs(dy));
- return {dragging:active,offset:active?Math.max(-width*1.4,Math.min(width*1.4,dx)):0};
+ const distance=Math.hypot(dx,dy),active=dragging||distance>=8;
+ const scale=distance>width*1.4?width*1.4/distance:1;
+ return {dragging:active,offset:active?{x:dx*scale,y:dy*scale}:{x:0,y:0}};
 }
