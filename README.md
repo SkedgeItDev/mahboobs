@@ -13,3 +13,5 @@ Streaks reset on collecting a second unmatched half; selecting the first half of
 The default three-layer geometry has 36 positions. Change `geometry()` alongside pairCount if designing a different tile count/layout. No artwork or advertising provider is contacted.
 
 Optional WebMCP tools expose game read, tile selection, and reveal continuation in supported browsers.
+
+Tile faces stay at full brightness. Gold borders identify playable tiles. Pointer gestures on uncovered tiles temporarily translate them horizontally, with pointer capture and touch slop to distinguish a tap from a drag. Releasing/cancelling snaps back and suppresses collection. Peeks never change board coordinates or freedom rules. Covered tiles remain unselectable while a tile is displaced. Arrow keys provide a keyboard peek.
