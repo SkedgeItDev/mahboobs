@@ -4,7 +4,7 @@ Mobile-first React/TypeScript matching game. No accounts, payments, backend data
 - `app/config.ts`: completion reward tiers, pair/library counts, rack capacity, starting resources, streak rewards and speed thresholds.
 - `app/engine.ts`: pure board rules and state transitions. Deals assign pairs along a legal removal sequence, guaranteeing a route to completion. Shuffle prioritizes rack complements then assigns complete pairs along a fresh legal sequence.
 - `app/Game.tsx`: presentation, local preferences/high score, hidden active-time tracking, and simulated rewarded-video adapter. BannerAd is the reserved banner interface.
-- `public/images/pairs/`: 50 neutral numbered placeholder sets. Replace the 150 WebP files at the same paths; gameplay references come from the central manifest in engine.ts. Reveal dimensions are 1200×600; A/B halves are 600×600 vertical crops.
+- `public/images/pairs/`: 50 neutral numbered placeholder sets. Replace the 150 WebP files at the same paths; gameplay references come from the central manifest in engine.ts. Reveal dimensions are 1200×768; A/B halves are 600×768 vertical crops.
 
 A full rack permits only matching board-half selections. This lets Shuffle recover without changing the rack or expanding its capacity. Undo restores the most recently collected unmatched tile, retaining its original coordinates and key, even after shuffle.
 
@@ -21,3 +21,5 @@ The game uses a fixed dynamic-viewport grid (100dvh) with safe-area padding. Con
 Levels progress via Next Level on completion. The current level is stored locally; Retry Level preserves it. Level 1 is face-up; subsequent levels conceal 25%, 40%, 50%, then 55% of the initial tiles, capped by nonplayable candidates. Every tile turns permanently face-up once playable. Concealment does not change pair identities, geometry, or solvability. During a peek, hidden artwork appears only when all covering layers are sufficiently displaced; releasing restores its back. Ratios and reveal behavior live in config.ts. Best times are now recorded per level, and completion bonuses carry to the next level.
 
 Inspection now remembers exactly one concealed tile. Touch an uncovered hidden tile, or drag its covering tile aside, to inspect it. It stays face-up after release until another tile is pressed. The previously inspected concealed face rotates back with a 240ms 3D flip. Playable/initially visible faces remain visible. Inspection resets on shuffle, undo, retry and level change; it does not change hidden flags or board rules. Reduced-motion preferences disable the flip transition.
+
+Artwork export specification: full reveal 1200×768 pixels, A left and B right halves 600×768 pixels. Tile fronts now use the entire portrait image with no number/A/B footer strip. Pair identities remain in accessible button labels and the reveal screen, and filenames/manifest paths are unchanged.
