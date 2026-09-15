@@ -27,3 +27,5 @@ Artwork export specification: full reveal 1200×768 pixels, A left and B right h
 Pairs 01–30 contain the user-provided PSD layers exported in top-to-bottom Photoshop stack order at WebP quality 90. Pairs 31–50 remain neutral placeholders. The private source PSD is not included in the project or deployment. The local export mapping is retained outside the Site checkout.
 
 Pairs 01–30 now contain the user-provided PSD layers exported in top-to-bottom Photoshop stack order at WebP quality 90. Pairs 31–50 remain neutral placeholders. The private source PSD is not included in the project or deployment. The local export mapping is retained outside the Site checkout.
+
+The production pool is temporarily limited by `availablePairCount: 30`; the 50-entry manifest and remaining placeholders stay intact for later artwork. A tap/click on a nonplayable board tile leaves state unchanged, raises it visually, shakes it for 500ms, and announces that it is not yet playable. A drag peek suppresses this tap feedback.

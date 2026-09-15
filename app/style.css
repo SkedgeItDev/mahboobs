@@ -33,3 +33,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 
 /* Portrait artwork fills the entire front, with only the game-rendered frame around it. */
 .game-screen .tile .tile-front img{display:block;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center;border-radius:inherit}
+
+@keyframes blocked-tile-shake{0%,100%{transform:translateX(0)}18%{transform:translateX(-4px) rotate(-1deg)}36%{transform:translateX(4px) rotate(1deg)}54%{transform:translateX(-3px) rotate(-.6deg)}72%{transform:translateX(3px) rotate(.6deg)}88%{transform:translateX(-1px)}}
+.game-screen .tile.blocked-shake{animation:blocked-tile-shake 500ms ease-out;z-index:85!important}
+@media(prefers-reduced-motion:reduce){.game-screen .tile.blocked-shake{animation:blocked-tile-shake 500ms ease-out}}
