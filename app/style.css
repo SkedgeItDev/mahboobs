@@ -37,3 +37,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 @keyframes blocked-tile-shake{0%,100%{transform:translateX(0)}18%{transform:translateX(-4px) rotate(-1deg)}36%{transform:translateX(4px) rotate(1deg)}54%{transform:translateX(-3px) rotate(-.6deg)}72%{transform:translateX(3px) rotate(.6deg)}88%{transform:translateX(-1px)}}
 .game-screen .tile.blocked-shake{animation:blocked-tile-shake 500ms ease-out;z-index:85!important}
 @media(prefers-reduced-motion:reduce){.game-screen .tile.blocked-shake{animation:blocked-tile-shake 500ms ease-out}}
+.game-screen .tile.hinted{border:3px solid #ffd36f;outline:0;box-shadow:0 4px 0 #a48a5b,0 0 0 3px #fff1ad,0 0 28px 10px #ffc75dcc!important;filter:brightness(1.18) saturate(1.15);animation:hint-pulse 700ms ease-in-out infinite alternate;-webkit-animation:hint-pulse 700ms ease-in-out infinite alternate;z-index:86!important}
+.game-screen .tile.hinted::after{content:"";position:absolute;inset:1px;border:2px solid #fff7cb;border-radius:4px;pointer-events:none;z-index:5}
+@keyframes hint-pulse{from{filter:brightness(1.08) saturate(1.08)}to{filter:brightness(1.32) saturate(1.25)}}
+@-webkit-keyframes hint-pulse{from{-webkit-filter:brightness(1.08) saturate(1.08)}to{-webkit-filter:brightness(1.32) saturate(1.25)}}
