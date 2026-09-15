@@ -23,3 +23,7 @@ Levels progress via Next Level on completion. The current level is stored locall
 Inspection now remembers exactly one concealed tile. Touch an uncovered hidden tile, or drag its covering tile aside, to inspect it. It stays face-up after release until another tile is pressed. The previously inspected concealed face rotates back with a 240ms 3D flip. Playable/initially visible faces remain visible. Inspection resets on shuffle, undo, retry and level change; it does not change hidden flags or board rules. Reduced-motion preferences disable the flip transition.
 
 Artwork export specification: full reveal 1200×768 pixels, A left and B right halves 600×768 pixels. Tile fronts now use the entire portrait image with no number/A/B footer strip. Pair identities remain in accessible button labels and the reveal screen, and filenames/manifest paths are unchanged.
+
+Pairs 01–30 contain the user-provided PSD layers exported in top-to-bottom Photoshop stack order at WebP quality 90. Pairs 31–50 remain neutral placeholders. The private source PSD is not included in the project or deployment. The local export mapping is retained outside the Site checkout.
+
+Pairs 01–30 now contain the user-provided PSD layers exported in top-to-bottom Photoshop stack order at WebP quality 90. Pairs 31–50 remain neutral placeholders. The private source PSD is not included in the project or deployment. The local export mapping is retained outside the Site checkout.
