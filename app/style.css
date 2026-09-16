@@ -41,3 +41,33 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 .game-screen .tile.hinted::after{content:"";position:absolute;inset:1px;border:2px solid #fff7cb;border-radius:4px;pointer-events:none;z-index:5}
 @keyframes hint-pulse{from{filter:brightness(1.08) saturate(1.08)}to{filter:brightness(1.32) saturate(1.25)}}
 @-webkit-keyframes hint-pulse{from{-webkit-filter:brightness(1.08) saturate(1.08)}to{-webkit-filter:brightness(1.32) saturate(1.25)}}
+
+/* A taller four-column table makes the artwork legible on a phone. */
+.game-screen{grid-template-rows:32px 42px minmax(0,1fr) 78px 76px 22px;gap:4px}
+.game-screen header{align-items:center}.game-screen .level-label{font:700 12px Arial,sans-serif;letter-spacing:2.4px;color:#dfc799}.game-screen .round{height:30px;width:30px}
+.game-screen .board{width:var(--board-width,min(100cqw,64cqh,440px));aspect-ratio:.64;border-radius:19px}
+.game-screen .tile{width:23%;aspect-ratio:1/1.24;border-radius:8px;padding:3px}
+.game-screen .rack-section{grid-template-columns:68px minmax(0,1fr);grid-template-rows:minmax(0,1fr) 18px;padding:3px 5px}
+.game-screen .rack-heading h2{font-size:11px}.game-screen .rack{gap:5px}.game-screen .slot{width:min(calc(var(--tile-width) * .7),62px);flex-basis:min(calc(var(--tile-width) * .7),62px);aspect-ratio:1/1.24}.game-screen .message{font-size:11px;line-height:15px;white-space:nowrap;text-overflow:ellipsis;display:block}
+.game-screen .tools{display:flex;align-items:center;justify-content:space-evenly;gap:8px}
+.game-screen .tools .tool-button{position:relative;flex:0 0 70px;width:70px;height:76px;min-height:0;padding:0;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:1px}
+.game-screen .tools .tool-button:hover{background:none}.game-screen .tools .tool-button:disabled{opacity:.5}
+.game-screen .tools .tool-icon{display:grid;place-items:center;width:55px;height:55px;border:4px solid #a66d35;border-radius:50%;background:radial-gradient(circle at 35% 25%,#774829,#3a2018 75%);color:#ffddb0;box-shadow:0 3px 0 #21150f,0 7px 14px #0005;font-size:32px;line-height:1}
+.game-screen .tools .tool-count{position:absolute;top:0;right:0;min-width:24px;height:24px;padding:1px 4px;border:2px solid #b77742;border-radius:15px;background:#a83726;color:#fff3e2;font:700 14px/18px Arial,sans-serif}
+.game-screen .tools .tool-caption{color:#dfc799;font:700 11px/15px Arial,sans-serif;letter-spacing:.2px}
+.game-screen footer{align-self:end}
+
+.level-intro{position:fixed;inset:0;z-index:200;display:grid;place-items:center;overflow:hidden;isolation:isolate}
+.intro-panel{position:absolute;top:0;bottom:0;width:50.15%;background:radial-gradient(ellipse at 50% 35%,#235f48,#0d2a27 62%,#0a1b1c);transition:transform 650ms cubic-bezier(.76,0,.24,1);will-change:transform}
+.intro-left{left:0;border-right:2px solid #b68c5b}.intro-right{right:0;border-left:2px solid #b68c5b}
+.level-intro.leaving .intro-left{transform:translateX(-102%)}.level-intro.leaving .intro-right{transform:translateX(102%)}
+.intro-content{position:relative;z-index:1;width:min(90vw,420px);text-align:center;transition:opacity 170ms ease,transform 300ms ease}
+.level-intro.leaving .intro-content{opacity:0;transform:scale(.94);pointer-events:none}
+.intro-eyebrow{display:block;margin-bottom:20px;color:#e7c583;font:700 13px Arial,sans-serif;letter-spacing:4px}
+.intro-content h2{margin:0 0 34px;color:#fff2d7;font:600 clamp(42px,12vw,62px)/1.05 Georgia,serif;letter-spacing:-2px;text-shadow:0 4px 22px #041b17}
+.intro-content h2 em{font-style:italic;color:#e8bd77}
+.intro-continue{min-width:205px;min-height:54px;padding:0 20px;border:1px solid #f4d79c;border-radius:29px;background:#dfb974;color:#251e18;font:700 17px Arial,sans-serif;box-shadow:0 8px 24px #0006}
+.intro-continue span{margin-left:14px;font-size:23px;vertical-align:-1px}
+.intro-continue:disabled{opacity:.75}
+@media(max-height:500px) and (orientation:landscape){.game-screen{grid-template-columns:minmax(0,1fr) 230px;grid-template-rows:32px minmax(0,1fr) 76px 22px}.game-screen header{grid-column:1/-1}.game-screen .board-stage{grid-column:1;grid-row:2/4}.game-screen .stats{grid-column:2;grid-row:2;align-self:start}.game-screen .rack-section{grid-column:2;grid-row:2;align-self:center;width:100%;height:78px}.game-screen .tools{grid-column:2;grid-row:3}.game-screen footer{grid-column:1/-1;grid-row:4}}
+@media(prefers-reduced-motion:reduce){.intro-panel{transition-duration:180ms}.intro-content{transition-duration:100ms}}
