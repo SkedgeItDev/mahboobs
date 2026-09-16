@@ -49,6 +49,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 .game-screen .tile{width:23%;aspect-ratio:1/1.24;border-radius:8px;padding:3px}
 .game-screen .rack-section{grid-template-columns:68px minmax(0,1fr);grid-template-rows:minmax(0,1fr) 18px;padding:3px 5px}
 .game-screen .rack-heading h2{font-size:11px}.game-screen .rack{gap:5px}.game-screen .slot{width:min(calc(var(--tile-width) * .7),62px);flex-basis:min(calc(var(--tile-width) * .7),62px);aspect-ratio:1/1.24}.game-screen .message{font-size:11px;line-height:15px;white-space:nowrap;text-overflow:ellipsis;display:block}
+.game-screen .slot .tile{inset:0;width:100%;height:100%;aspect-ratio:auto}
 .game-screen .tools{display:flex;align-items:center;justify-content:space-evenly;gap:8px}
 .game-screen .tools .tool-button{position:relative;flex:0 0 70px;width:70px;height:76px;min-height:0;padding:0;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:1px}
 .game-screen .tools .tool-button:hover{background:none}.game-screen .tools .tool-button:disabled{opacity:.5}
