@@ -59,6 +59,9 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 .game-screen footer{align-self:end}
 .modal.reveal[data-slot="dialog-content"]{padding-inline:18px}
 .modal.reveal .ad-placeholder{width:320px;max-width:100%;height:100px;margin:20px auto}
+.reveal-action-row{height:40px;display:flex;align-items:center;justify-content:flex-end;margin:-7px 0 9px}
+.reveal-continue{min-width:118px;height:36px;padding:0 13px;border:1px solid #e8cc98;border-radius:20px;background:#dec38e;color:#263124;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 4px 12px #0004}
+.reveal-continue span{font-size:18px;line-height:1}
 
 .level-intro{position:fixed;inset:0;z-index:200;display:grid;place-items:center;overflow:hidden;isolation:isolate}
 .intro-panel{position:absolute;top:0;bottom:0;width:50.15%;background:radial-gradient(ellipse at 50% 35%,#235f48,#0d2a27 62%,#0a1b1c);transition:transform 650ms cubic-bezier(.76,0,.24,1);will-change:transform}
