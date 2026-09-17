@@ -57,6 +57,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 .game-screen .tools .tool-count{position:absolute;top:0;right:0;min-width:24px;height:24px;padding:1px 4px;border:2px solid #b77742;border-radius:15px;background:#a83726;color:#fff3e2;font:700 14px/18px Arial,sans-serif}
 .game-screen .tools .tool-caption{color:#dfc799;font:700 11px/15px Arial,sans-serif;letter-spacing:.2px}
 .game-screen footer{align-self:end}
+.modal.reveal[data-slot="dialog-content"]{padding-inline:18px}
+.modal.reveal .ad-placeholder{width:320px;max-width:100%;height:100px;margin:20px auto}
 
 .level-intro{position:fixed;inset:0;z-index:200;display:grid;place-items:center;overflow:hidden;isolation:isolate}
 .intro-panel{position:absolute;top:0;bottom:0;width:50.15%;background:radial-gradient(ellipse at 50% 35%,#235f48,#0d2a27 62%,#0a1b1c);transition:transform 650ms cubic-bezier(.76,0,.24,1);will-change:transform}
