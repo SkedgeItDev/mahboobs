@@ -77,3 +77,20 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 .intro-continue:disabled{opacity:.75}
 @media(max-height:500px) and (orientation:landscape){.game-screen{grid-template-columns:minmax(0,1fr) 230px;grid-template-rows:32px minmax(0,1fr) 76px 22px}.game-screen header{grid-column:1/-1}.game-screen .board-stage{grid-column:1;grid-row:2/4}.game-screen .stats{grid-column:2;grid-row:2;align-self:start}.game-screen .rack-section{grid-column:2;grid-row:2;align-self:center;width:100%;height:78px}.game-screen .tools{grid-column:2;grid-row:3}.game-screen footer{grid-column:1/-1;grid-row:4}}
 @media(prefers-reduced-motion:reduce){.intro-panel{transition-duration:180ms}.intro-content{transition-duration:100ms}}
+
+.age-gate{position:fixed;inset:0;z-index:300;display:grid;place-items:center;overflow:auto;isolation:isolate;padding:max(16px,env(safe-area-inset-top)) 20px max(16px,env(safe-area-inset-bottom));border:0;margin:0;max-width:none;max-height:none;width:100%;height:100dvh;background:transparent;color:inherit}
+.age-gate::backdrop{background:transparent}
+.age-gate-content{position:relative;z-index:1;width:min(90vw,400px);text-align:center}
+.age-gate-content h1{margin:0 0 16px;color:#fff2d7;font:600 clamp(32px,9vw,46px)/1.08 Georgia,serif;letter-spacing:-1.5px;text-shadow:0 4px 22px #041b17}
+.age-gate-content p{margin:0 0 28px;color:#d5e0d4;font:400 16px/1.55 Arial,sans-serif}
+.age-gate-actions{display:flex;flex-direction:column;align-items:center;gap:12px}
+.age-gate .intro-continue{min-width:min(100%,280px)}
+.age-gate-leave{background:none;border:0;color:#c9d6c8;font:600 15px/1.4 Arial,sans-serif;text-decoration:underline;text-underline-offset:3px;min-height:44px;padding:8px 12px}
+.age-gate-leave:hover,.age-gate-leave:focus-visible{color:#fff2d7}
+@media(max-height:500px) and (orientation:landscape){
+ .age-gate-content{width:min(92vw,560px)}
+ .age-gate-content h1{margin-bottom:10px;font-size:clamp(24px,6vw,34px)}
+ .age-gate-content p{margin-bottom:16px;font-size:15px}
+ .age-gate-actions{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:8px 18px}
+ .age-gate .intro-continue{min-width:220px;min-height:48px}
+}
