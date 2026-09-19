@@ -47,7 +47,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 
 /* A taller four-column table makes the artwork legible on a phone. */
 .game-screen{grid-template-rows:32px 42px minmax(0,1fr) 78px 76px 22px;gap:4px}
-.game-screen header{align-items:center}.game-screen .level-label{font:700 12px Arial,sans-serif;letter-spacing:2.4px;color:#dfc799}.game-screen .round{height:30px;width:30px}
+.game-screen header{align-items:center}.game-screen .level-label{font:700 12px Arial,sans-serif;letter-spacing:2.4px;color:#dfc799}.game-screen .header-actions{display:flex;align-items:center;gap:8px}.game-screen .round{height:30px;width:30px}
 .game-screen .board{width:var(--board-width,min(100cqw,64cqh,440px));aspect-ratio:.64;border-radius:19px}
 .game-screen .tile{width:23%;aspect-ratio:1/1.24;border-radius:8px;padding:3px}
 .game-screen .rack-section{grid-template-columns:68px minmax(0,1fr);grid-template-rows:minmax(0,1fr) 18px;padding:3px 5px}
@@ -184,4 +184,53 @@ body{min-height:100dvh;min-height:-webkit-fill-available;touch-action:manipulati
  height:min(100%,100cqh,calc(min(var(--tile-width) * .7,62px) * 1.24));
  max-height:100%;
  aspect-ratio:1/1.24;
+}
+
+/* Permanent home-screen control in game chrome (not the title/18+ screen). */
+.install-launch{
+ min-height:30px;
+ padding:0 10px;
+ border:1px solid #e8cc98;
+ border-radius:16px;
+ background:#1d3026;
+ color:#dfc799;
+ font:700 10px/1 Arial,sans-serif;
+ letter-spacing:.2px;
+ white-space:nowrap;
+}
+.install-launch:disabled{opacity:.6}
+.install-launch-done{
+ display:grid;
+ place-items:center;
+ border-color:#71816a70;
+ color:#8d9e8e;
+}
+.install-help{
+ position:fixed;
+ inset:0;
+ z-index:220;
+ display:grid;
+ place-items:center;
+ padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+ background:#07120ee8;
+ backdrop-filter:blur(9px);
+}
+.install-help-card{
+ width:min(92vw,400px);
+ padding:24px 22px;
+ background:#1d3026;
+ border:1px solid #9e8c6155;
+ border-radius:20px;
+ text-align:center;
+ box-shadow:0 30px 100px #0008;
+}
+.install-help-card h2{font:500 28px Georgia,serif;margin:12px 0 16px;letter-spacing:-.4px;color:#fff2d7}
+.install-help-card p{margin:0 0 16px;color:#b8c7b6;font:400 15px/1.55 Arial,sans-serif}
+.install-help-card ol{margin:0 0 22px;padding:0 0 0 1.2em;color:#d5e0d4;font:400 15px/1.55 Arial,sans-serif;text-align:left}
+.install-help-card li{margin:0 0 8px}
+.install-help-card li:last-child{margin-bottom:0}
+.install-help-card b{color:#fff2d7;font-weight:700}
+.install-help-card .primary{justify-content:center}
+@media(display-mode:standalone),(display-mode:fullscreen){
+ .install-launch,.install-help{display:none!important}
 }
