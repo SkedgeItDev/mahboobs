@@ -35,6 +35,7 @@ export function InstallControl() {
       try{
         await promptEvent.prompt();
         const {outcome}=await promptEvent.userChoice;
+        setPromptEvent(null);
         if(outcome==='accepted')setInstalled(true);
       }catch{
         setHelp(true);

@@ -231,3 +231,6 @@ body{min-height:100dvh;min-height:-webkit-fill-available;touch-action:manipulati
 .install-help-card li:last-child{margin-bottom:0}
 .install-help-card b{color:#fff2d7;font-weight:700}
 .install-help-card .primary{justify-content:center}
+@media(display-mode:standalone),(display-mode:fullscreen){
+ .install-launch,.install-help{display:none!important}
+}
