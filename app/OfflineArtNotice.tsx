@@ -20,5 +20,5 @@ export function OfflineArtNotice(){
   return()=>{window.removeEventListener('error',onError,true);window.removeEventListener('online',onOnline)};
  },[]);
  if(!visible)return null;
- return <div className="offline-art-notice" role="status" aria-live="polite"><p>{COPY}</p><button type="button" onClick={()=>setVisible(false)}>OK</button></div>;
+ return <div className="offline-art-notice" aria-live="polite"><p>{COPY}</p><button type="button" onClick={()=>setVisible(false)}>OK</button></div>;
 }
