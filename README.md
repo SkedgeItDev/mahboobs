@@ -5,6 +5,7 @@ Mobile-first React/TypeScript matching game. No accounts, payments, backend data
 - `app/engine.ts`: pure board rules and state transitions. Deals assign pairs along a legal removal sequence, guaranteeing a route to completion. Shuffle prioritizes rack complements then assigns complete pairs along a fresh legal sequence.
 - `app/Game.tsx`: presentation, local preferences/high score, hidden active-time tracking, and simulated rewarded-video adapter. BannerAd is the reserved banner interface. First visit shows an adults-only age gate; acceptance is stored as `mah-age-ok`.
 - `public/images/pairs/`: 50 original production pair sets (generated replacements for copied placeholders). Gameplay references come from the central manifest in engine.ts. Reveal dimensions are 1200×768; A/B halves are 600×768 vertical crops.
+- Face-down tile backs change by level. Art lives in `public/images/tile-backs`. The color set (green, purple, red, black) advances every 10 levels and then cycles; paths and the decade length live in `app/config.ts`.
 
 A full rack permits only matching board-half selections. This lets Shuffle recover without changing the rack or expanding its capacity. Undo restores the most recently collected unmatched tile, retaining its original coordinates and key, even after shuffle.
 
