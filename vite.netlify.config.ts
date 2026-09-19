@@ -32,9 +32,25 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // App shell only. Pair artwork stays network-loaded on purpose.
+        // Precache the app shell + small UI. Do not precache the 50 pair WebP sets.
         globPatterns: ['**/*.{js,css,html,svg,ico,webmanifest}', 'icons/*.png'],
+        globIgnores: ['**/images/pairs/**'],
         navigateFallback: 'index.html',
+        cleanupOutdatedCaches: true,
+        runtimeCaching: [
+          {
+            urlPattern: /\/images\/pairs\/.*\.(?:webp|png)$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'mah-pair-art-runtime',
+              expiration: {
+                maxEntries: 48,
+                maxAgeSeconds: 60 * 60 * 24 * 14,
+              },
+              cacheableResponse: {statuses: [0, 200]},
+            },
+          },
+        ],
       },
     }),
   ],

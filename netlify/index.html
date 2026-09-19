@@ -14,8 +14,8 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <title>Mah Boobs · The Matching Room</title>
     <style>
-      html,body{margin:0;background:#101a18;min-height:100dvh}
-      #app-splash{position:fixed;inset:0;z-index:4000;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top)) 24px max(16px,env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% 30%,#234138 0,#101a18 65%);color:#fff2d7;text-align:center;transition:opacity 280ms ease}
+      html,body{margin:0;background:#101a18;min-height:100dvh;overscroll-behavior:none}
+      #app-splash{position:fixed;inset:0;z-index:4000;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px));background:radial-gradient(ellipse at 50% 30%,#234138 0,#101a18 65%);color:#fff2d7;text-align:center;transition:opacity 280ms ease}
       #app-splash.app-splash-hide{opacity:0;pointer-events:none}
       #app-splash .app-splash-mark{display:block;width:96px;height:96px;margin:0 auto 22px}
       #app-splash .app-splash-eyebrow{display:block;margin-bottom:12px;color:#e7c583;font:700 13px/1 Arial,sans-serif;letter-spacing:4px}
