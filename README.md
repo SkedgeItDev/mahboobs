@@ -2,7 +2,7 @@
 Mobile-first React/TypeScript matching game. No accounts, payments, backend data, or real ad network.
 
 ## Put it on your phone
-On the live site (https://mahboobs.netlify.app) you can add Mah Boobs to your home screen so it opens like a phone app (full screen, no browser bar). The adults-only check still appears the first time.
+On the live site (https://mahboobs.netlify.app) you can add Mah Boobs to your home screen so it opens like a phone app (full screen, no browser bar). The first screen is the title page: check that you are 18+ (or of legal age where you live), then tap Enter. That check is remembered on the phone, so it is skipped next time.
 
 - **iPhone or iPad:** Open the site in Safari → tap the Share button → Add to Home Screen → Add.
 - **Android:** Open the site in Chrome → tap the ⋮ menu → Install app or Add to Home screen.
@@ -11,7 +11,7 @@ After you have opened the game once with a connection, the table and buttons sti
 
 - `app/config.ts`: completion reward tiers, pair/library counts, rack capacity, starting resources, streak rewards and speed thresholds.
 - `app/engine.ts`: pure board rules and state transitions. Deals assign pairs along a legal removal sequence, guaranteeing a route to completion. Shuffle prioritizes rack complements then assigns complete pairs along a fresh legal sequence.
-- `app/Game.tsx`: presentation, local preferences/high score, hidden active-time tracking, and simulated rewarded-video adapter. BannerAd is the reserved banner interface. First visit shows an adults-only age gate; acceptance is stored as `mah-age-ok`.
+- `app/Game.tsx`: presentation, local preferences/high score, hidden active-time tracking, and simulated rewarded-video adapter. BannerAd is the reserved banner interface. The first visit is one title screen (logo, name, a short adult-content note, an 18+ checkbox, and Enter). Checking the box is required before Enter. Acceptance is stored as `mah-age-ok` so return visits skip that screen.
 - `public/images/pairs/`: 50 original production pair sets (generated replacements for copied placeholders). Gameplay references come from the central manifest in engine.ts. Reveal dimensions are 1200×768; A/B halves are 600×768 vertical crops.
 - Face-down tile backs change by level. Art lives in `public/images/tile-backs`. The color set (green, purple, maroon, black, navy, forest, slate) advances every 10 levels and then cycles; paths and the decade length live in `app/config.ts`.
 
