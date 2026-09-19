@@ -5,10 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#101a18" />
     <meta name="description" content="A stacked solitaire matching game. Find two halves, clear the table, and keep your streak alive." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Matching Room" />
     <link rel="icon" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <title>Mah Boobs · The Matching Room</title>
+    <style>
+      html,body{margin:0;background:#101a18;min-height:100dvh;overscroll-behavior:none}
+      #app-splash{position:fixed;inset:0;z-index:4000;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px));background:radial-gradient(ellipse at 50% 30%,#234138 0,#101a18 65%);color:#fff2d7;text-align:center;transition:opacity 280ms ease}
+      #app-splash.app-splash-hide{opacity:0;pointer-events:none}
+      #app-splash .app-splash-mark{display:block;width:96px;height:96px;margin:0 auto 22px}
+      #app-splash .app-splash-eyebrow{display:block;margin-bottom:12px;color:#e7c583;font:700 13px/1 Arial,sans-serif;letter-spacing:4px}
+      #app-splash .app-splash-title{display:block;font:italic 600 clamp(36px,10vw,52px)/1.05 Georgia,serif;letter-spacing:-1.5px;text-shadow:0 4px 22px #041b17}
+      @media(prefers-reduced-motion:reduce){#app-splash{transition:none}}
+    </style>
   </head>
   <body>
+    <div id="app-splash" role="status" aria-live="polite" aria-label="Loading Mah Boobs">
+      <div>
+        <img class="app-splash-mark" src="/icons/icon-192.png" width="96" height="96" alt="" />
+        <span class="app-splash-eyebrow">THE MATCHING ROOM</span>
+        <strong class="app-splash-title">Mah Boobs</strong>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/main.tsx"></script>
   </body>

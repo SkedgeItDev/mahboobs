@@ -94,3 +94,53 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
  .age-gate-actions{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:8px 18px}
  .age-gate .intro-continue{min-width:220px;min-height:48px}
 }
+
+/* Phone comfort: use viewport-fit=cover insets on every edge; reduce pull-to-refresh. Overlays may still scroll. */
+html,body,#root{height:100%;overflow:hidden;overscroll-behavior:none}
+html{height:100dvh}
+body{min-height:100dvh;min-height:-webkit-fill-available;touch-action:manipulation}
+.game-screen{
+ overscroll-behavior:none;
+ touch-action:manipulation;
+ padding:max(8px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(8px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));
+}
+.age-gate{
+ padding:max(16px,env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));
+ overscroll-behavior:contain;
+}
+.level-intro{
+ padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));
+}
+.modal[data-slot="dialog-content"]{
+ overscroll-behavior:contain;
+ max-height:calc(100dvh - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+}
+[data-slot="dialog-overlay"]{overscroll-behavior:none}
+.offline-art-notice{
+ position:fixed;
+ left:max(12px,env(safe-area-inset-left,0px));
+ right:max(12px,env(safe-area-inset-right,0px));
+ bottom:max(12px,env(safe-area-inset-bottom,0px));
+ z-index:150;
+ display:flex;
+ align-items:center;
+ gap:12px;
+ padding:10px 12px;
+ border:1px solid #9e8c6155;
+ border-radius:10px;
+ background:#1d3026;
+ color:#d5e0d4;
+ font:400 14px/1.4 Arial,sans-serif;
+ box-shadow:0 12px 40px #0008;
+}
+.offline-art-notice p{margin:0;flex:1}
+.offline-art-notice button{
+ flex:none;
+ min-height:36px;
+ padding:0 12px;
+ border:1px solid #e8cc98;
+ border-radius:8px;
+ background:#dec38e;
+ color:#263124;
+ font:700 13px Arial,sans-serif;
+}
