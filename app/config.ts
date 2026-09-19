@@ -1,7 +1,7 @@
 // Active completion time is hidden during play. Faster tiers grant bonuses for the next game.
 export const CONFIG = {
-  pairCount:18, librarySize:50, availablePairCount:30, rackCapacity:4, initialResources:1, rewardVideoSeconds:3,
-  // Only pairs 01–30 are dealt until the remaining production artwork is ready.
+  pairCount:18, librarySize:50, availablePairCount:50, rackCapacity:4, initialResources:1, rewardVideoSeconds:3,
+  // The full 50-entry production library is dealt.
   // Level 1 introduces the board; later levels progressively conceal more tile faces.
   hiddenTileRatios:[0,.25,.40,.50,.55],
   revealHiddenOnPeek:true, peekRevealMinimum:.3,
