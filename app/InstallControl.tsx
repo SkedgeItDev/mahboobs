@@ -1,6 +1,6 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
-import {captureInstallPrompt,isIosDevice,isStandaloneDisplay,subscribeInstallPrompt,type InstallPromptEvent} from './install';
+import {captureInstallPrompt,isIosDevice,isStandaloneDisplay,releaseInstallPrompt,subscribeInstallPrompt,type InstallPromptEvent} from './install';
 
 captureInstallPrompt();
 
@@ -35,7 +35,7 @@ export function InstallControl() {
       try{
         await promptEvent.prompt();
         const {outcome}=await promptEvent.userChoice;
-        setPromptEvent(null);
+        releaseInstallPrompt();
         if(outcome==='accepted')setInstalled(true);
       }catch{
         setHelp(true);

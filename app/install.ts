@@ -7,6 +7,7 @@ export type InstallPromptEvent = Event & {
 
 let deferred: InstallPromptEvent | null = null;
 let listening = false;
+let armed = true;
 const listeners = new Set<(event: InstallPromptEvent | null) => void>();
 
 function notify(event: InstallPromptEvent | null) {
@@ -18,13 +19,22 @@ export function captureInstallPrompt() {
   listening = true;
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
+    if (!armed) return;
     deferred = event as InstallPromptEvent;
     notify(deferred);
   });
   window.addEventListener('appinstalled', () => {
+    armed = false;
     deferred = null;
     notify(null);
   });
+}
+
+/** After the native prompt is used (accepted or cancelled), do not re-arm it this visit. */
+export function releaseInstallPrompt() {
+  armed = false;
+  deferred = null;
+  notify(null);
 }
 
 export function subscribeInstallPrompt(fn: (event: InstallPromptEvent | null) => void) {
