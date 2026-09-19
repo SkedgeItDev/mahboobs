@@ -6,13 +6,16 @@ export const CONFIG = {
   hiddenTileRatios:[0,.25,.40,.50,.55],
   // Face-down tile backs. Reorder or swap paths to change colors; the same list repeats forever.
   // Each entry is used for `tileBackLevelsPerSet` consecutive levels:
-  // 1–10 green, 11–20 purple, 21–30 red, 31–40 black, 41–50 green, …
+  // 1–10 green, 11–20 purple, 21–30 red, 31–40 black, 41–50 orange, 51–60 teal, 61–70 lime, then cycle.
   tileBackLevelsPerSet:10,
   tileBackImages:[
     '/images/tile-backs/tile-back-green.webp',
     '/images/tile-backs/tile-back-purple.webp',
     '/images/tile-backs/tile-back-red.webp',
     '/images/tile-backs/tile-back-black.webp',
+    '/images/tile-backs/tile-back-orange.webp',
+    '/images/tile-backs/tile-back-teal.webp',
+    '/images/tile-backs/tile-back-lime.webp',
   ],
   revealHiddenOnPeek:true, peekRevealMinimum:.3,
   streakRewards:{5:{hint:1},8:{shuffle:1}},
