@@ -29,6 +29,7 @@ const current=useRef({g,blocked:true});current.current={g,blocked:ageGate!=='ok'
 useEffect(()=>registerGameTools(()=>current.current,next=>flushSync(()=>setG(next))),[]);
 useEffect(()=>{setQuiet(localStorage.getItem('mah-quiet')==='true')},[]);
 useEffect(()=>{try{setAgeGate(localStorage.getItem(AGE_PREF)==='true'?'ok':'needed')}catch{setAgeGate('needed')}},[]);
+useEffect(()=>{document.getElementById('app-splash')?.remove()},[]);
 useEffect(()=>{if(intro||!g.started||g.reveal||g.status!=='playing'||video||help)return;let last=performance.now();const id=setInterval(()=>{const now=performance.now();const delta=(now-last)/1000;last=now;setG(g=>tick(g,delta))},100);return()=>clearInterval(id)},[intro,g.started,g.reveal,g.status,video,help]);
 useEffect(()=>{if(g.status==='won'&&(!best||g.elapsed<best)){setBest(g.elapsed);localStorage.setItem(`mah-best-level-${g.level}`,String(g.elapsed))}},[g.status,g.elapsed,best,g.level]);
 function resource(r:Resource){if(r==='shuffle'||r==='undo')setInspected(null);if(g.resources[r])setG(g=>use(g,r));else{setCount(CONFIG.rewardVideoSeconds);setVideo(r);rewardedAds.show(setCount).then(earned=>{if(earned)setG(g=>({...g,resources:{...g.resources,[r]:g.resources[r]+1}}));setVideo(null)})}}
@@ -49,13 +50,15 @@ function RevealContinue({onContinue}:{onContinue:()=>void}){const [ready,setRead
 
 function Modal({children,title,reveal=false}:{children:ReactNode,title:string,reveal?:boolean}){return <Dialog open><DialogContent showCloseButton={false} className={`modal ${reveal?"reveal":""}`}><DialogTitle className="sr-only">{title}</DialogTitle>{children}</DialogContent></Dialog>}
 
+function AgeGateBrand(){return <><img className="age-gate-mark" src="/icons/icon-192.png" width="96" height="96" alt=""/><span className="intro-eyebrow">THE MATCHING ROOM</span></>}
 function AgeGate({mode,onEnter,onLeave,onBack}:{mode:'pending'|'needed'|'left',onEnter:()=>void,onLeave:()=>void,onBack:()=>void}){
- const enterRef=useRef<HTMLButtonElement>(null);
+ const confirmRef=useRef<HTMLInputElement>(null);
  const backRef=useRef<HTMLButtonElement>(null);
- useEffect(()=>{if(mode==='needed')enterRef.current?.focus();if(mode==='left')backRef.current?.focus()},[mode]);
+ const [confirmed,setConfirmed]=useState(false);
+ useEffect(()=>{setConfirmed(false);if(mode==='needed')confirmRef.current?.focus();if(mode==='left')backRef.current?.focus()},[mode]);
  useEffect(()=>{if(mode!=='needed')return;const onKey=(e:KeyboardEvent)=>{if(e.key==='Escape')onLeave()};window.addEventListener('keydown',onKey);return()=>window.removeEventListener('keydown',onKey)},[mode,onLeave]);
  const panels=<><div className="intro-panel intro-left" aria-hidden="true"/><div className="intro-panel intro-right" aria-hidden="true"/></>;
- if(mode==='pending')return <div className="age-gate" role="status" aria-busy="true"><p className="sr-only">Loading.</p>{panels}</div>;
- if(mode==='left')return <dialog className="age-gate" open aria-labelledby="age-gate-left-title" aria-describedby="age-gate-left-copy">{panels}<div className="age-gate-content"><span className="intro-eyebrow">THE MATCHING ROOM</span><h1 id="age-gate-left-title">That&apos;s all for now</h1><p id="age-gate-left-copy">This experience is for adults. You can close this page whenever you like.</p><button ref={backRef} className="age-gate-leave" type="button" onClick={onBack}>Go back</button></div></dialog>;
- return <dialog className="age-gate" open aria-labelledby="age-gate-title" aria-describedby="age-gate-copy">{panels}<div className="age-gate-content"><span className="intro-eyebrow">THE MATCHING ROOM</span><h1 id="age-gate-title">Adults only</h1><p id="age-gate-copy">This matching game includes nudity and sexual imagery. Confirm you are 18 or older, or of legal age where you live, before you enter.</p><div className="age-gate-actions"><button ref={enterRef} className="intro-continue" type="button" onClick={onEnter}>I am 18+ · Enter</button><button className="age-gate-leave" type="button" onClick={onLeave}>I&apos;m under 18 · Leave</button></div></div></dialog>;
+ if(mode==='pending')return <div className="age-gate" role="status" aria-busy="true"><p className="sr-only">Loading.</p>{panels}<div className="age-gate-content"><AgeGateBrand/><h1 className="age-gate-title">Mah Boobs</h1></div></div>;
+ if(mode==='left')return <dialog className="age-gate" open aria-labelledby="age-gate-left-title" aria-describedby="age-gate-left-copy">{panels}<div className="age-gate-content"><AgeGateBrand/><h1 id="age-gate-left-title">That&apos;s all for now</h1><p id="age-gate-left-copy">This experience is for adults. You can close this page whenever you like.</p><button ref={backRef} className="age-gate-leave" type="button" onClick={onBack}>Go back</button></div></dialog>;
+ return <dialog className="age-gate" open aria-labelledby="age-gate-title" aria-describedby="age-gate-copy">{panels}<div className="age-gate-content"><AgeGateBrand/><h1 id="age-gate-title" className="age-gate-title">Mah Boobs</h1><p id="age-gate-copy">This matching game includes nudity and sexual imagery. Check the box to confirm you are 18 or older, or of legal age where you live, then tap Enter.</p><label className="age-gate-confirm" htmlFor="age-gate-confirm"><input ref={confirmRef} id="age-gate-confirm" type="checkbox" checked={confirmed} onChange={e=>setConfirmed(e.target.checked)}/>I am 18 or older, or of legal age where I live</label><div className="age-gate-actions"><button className="intro-continue" type="button" disabled={!confirmed} onClick={onEnter}>Enter</button><button className="age-gate-leave" type="button" onClick={onLeave}>I&apos;m under 18 · Leave</button></div></div></dialog>;
 }
