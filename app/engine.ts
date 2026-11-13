@@ -1,14 +1,42 @@
 import {CONFIG} from './config';
+import {tileBounds} from './layout-fit';
 export {CONFIG} from './config';
 export type Resource='hint'|'undo'|'shuffle';
 export type Tile={key:number,x:number,y:number,z:number,pair:number,half:'a'|'b',hidden?:boolean};
 export const manifest=Array.from({length:CONFIG.librarySize},(_,i)=>{const n=String(i+1).padStart(2,'0');return {id:i+1,a:`/images/pairs/pair-${n}-a.webp`,b:`/images/pairs/pair-${n}-b.webp`,reveal:`/images/pairs/pair-${n}-reveal.webp`}});
-export function uncovered(t:Tile,board:Tile[]){return !board.some(b=>b.z>t.z&&Math.abs(b.x-t.x)<1&&Math.abs(b.y-t.y)<1)}
+export function covers(upper:Tile,lower:Tile){
+ if(upper.z<=lower.z)return false;
+ const a=tileBounds(upper),b=tileBounds(lower);
+ return a.left<b.left+b.width&&b.left<a.left+a.width&&a.top<b.top+b.height&&b.top<a.top+a.height;
+}
+export function uncovered(t:Tile,board:Tile[]){return !board.some(b=>covers(b,t))}
 export function free(t:Tile,board:Tile[]){return uncovered(t,board)&&(!board.some(b=>b.z===t.z&&b.y===t.y&&b.x===t.x-1)||!board.some(b=>b.z===t.z&&b.y===t.y&&b.x===t.x+1))}
 function random<T>(a:T[]){const out=[...a];for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out}
 export function order(board:Tile[]){let left=[...board];const seq:Tile[]=[];while(left.length){const t=random(left.filter(t=>free(t,left)))[0];if(!t)throw Error('Invalid geometry');seq.push(t);left=left.filter(b=>b.key!==t.key)}return seq}
 export function geometry(){const out:Tile[]=[];for(let z=0;z<3;z++){const w=z===2?2:4,h=z===0?6:2;for(let y=0;y<h;y++)for(let x=0;x<w;x++)out.push({key:out.length,x:x+(4-w)/2,y:y+(6-h)/2,z,pair:0,half:'a'})}return out}
-export function deal(){const ids=random(manifest.filter(p=>!CONFIG.unavailablePairIds.includes(p.id)).slice(0,CONFIG.availablePairCount).map(p=>p.id)).slice(0,CONFIG.pairCount);return order(geometry()).map((t,i)=>({...t,pair:ids[Math.floor(i/2)],half:(i%2?'b':'a') as Tile['half']}))}
+// Deal from a legal removal sequence: both halves of each pair must be free
+// before either is picked. Backtrack if an earlier choice leaves a lone free tile.
+function pairOrder(board:Tile[],dead=new Set<string>()):Tile[]|null{
+ if(!board.length)return [];
+ const signature=board.map(t=>t.key).join(',');
+ if(dead.has(signature))return null;
+ const playable=random(board.filter(t=>free(t,board)));
+ for(let i=0;i<playable.length;i++){
+  for(let j=i+1;j<playable.length;j++){
+   const a=playable[i],b=playable[j];
+   const rest=pairOrder(board.filter(t=>t.key!==a.key&&t.key!==b.key),dead);
+   if(rest)return [a,b,...rest];
+  }
+ }
+ dead.add(signature);
+ return null;
+}
+export function deal(){
+ const ids=random(manifest.filter(p=>!CONFIG.unavailablePairIds.includes(p.id)).slice(0,CONFIG.availablePairCount).map(p=>p.id)).slice(0,CONFIG.pairCount);
+ const sequence=pairOrder(geometry());
+ if(!sequence||sequence.length!==ids.length*2)throw Error('Invalid pair layout');
+ return sequence.map((t,i)=>({...t,pair:ids[Math.floor(i/2)],half:(i%2?'b':'a') as Tile['half']}));
+}
 export function redistribute(board:Tile[],rack:Tile[]){const seq=order(board);const identities=board.map(t=>({pair:t.pair,half:t.half}));const assigned:typeof identities=[];for(const r of rack){const i=identities.findIndex(t=>t.pair===r.pair);if(i>=0)assigned.push(...identities.splice(i,1))}const ids=random([...new Set(identities.map(t=>t.pair))]);for(const id of ids)assigned.push(...random(identities.filter(t=>t.pair===id)));return seq.map((t,i)=>({...t,...assigned[i]}))}
 export type Game={level:number,board:Tile[],rack:Tile[],completed:number,streak:number,bestStreak:number,elapsed:number,started:boolean,reveal:number|null,status:'playing'|'won',resources:Record<Resource,number>,highlight:number[],message:string};
 export function levelDeal(level:number){const board=deal();const ratio=CONFIG.hiddenTileRatios[Math.min(level-1,CONFIG.hiddenTileRatios.length-1)];const candidates=random(board.filter(t=>!free(t,board)));const hidden=new Set(candidates.slice(0,Math.round(board.length*ratio)).map(t=>t.key));return board.map(t=>({...t,hidden:hidden.has(t.key)}))}
