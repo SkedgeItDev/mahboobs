@@ -1,7 +1,8 @@
 // Active completion time is hidden during play. Faster tiers grant bonuses for the next game.
 export const CONFIG = {
-  pairCount:18, librarySize:59, availablePairCount:59, rackCapacity:4, initialResources:1, rewardVideoSeconds:3,
-  // The full 59-entry production library is dealt.
+  pairCount:18, librarySize:77, availablePairCount:77, rackCapacity:4, initialResources:1, rewardVideoSeconds:3,
+  unavailablePairIds:[] as readonly number[],
+  // All 77 pairs are available.
   // Level 1 introduces the board; later levels progressively conceal more tile faces.
   hiddenTileRatios:[0,.25,.40,.50,.55],
   // Face-down tile backs. Reorder or swap paths to change colors; the same list repeats forever.
