@@ -52,7 +52,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 .game-screen .tile{width:23%;aspect-ratio:1/1.24;border-radius:8px;padding:3px}
 /* Keep the solid tile rim inside the rectangle used by the move rules. */
 .game-screen .board .tile{padding-bottom:6px;box-shadow:inset 0 -4px #a59b83}
-.game-screen .board .tile.free{box-shadow:inset 0 -4px #a48a5b}
+.game-screen .board .tile.free{border-color:#f4cd7e;box-shadow:inset 0 -4px #a48a5b}
+.game-screen .board .tile.blocked{border-color:#8b9d92}
 .game-screen .board .tile.face-down{box-shadow:inset 0 -4px #713b32}
 .game-screen .board .tile.peeking{box-shadow:inset 0 -4px #a59b83,0 14px 20px #00120980}
 .game-screen .board .tile.hinted{box-shadow:inset 0 -4px #a48a5b,0 0 10px #ffc75dcc!important}

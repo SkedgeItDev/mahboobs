@@ -10,7 +10,12 @@ export function covers(upper:Tile,lower:Tile){
  return a.left<b.left+b.width&&b.left<a.left+a.width&&a.top<b.top+b.height&&b.top<a.top+a.height;
 }
 export function uncovered(t:Tile,board:Tile[]){return !board.some(b=>covers(b,t))}
-export function free(t:Tile,board:Tile[]){return uncovered(t,board)&&(!board.some(b=>b.z===t.z&&b.y===t.y&&b.x===t.x-1)||!board.some(b=>b.z===t.z&&b.y===t.y&&b.x===t.x+1))}
+// Finish the current top layer before collecting tiles from a lower layer.
+export function free(t:Tile,board:Tile[]){
+ if(board.some(b=>b.z>t.z))return false;
+ const row=board.filter(b=>b.z===t.z&&b.y===t.y);
+ return !row.some(b=>b.x===t.x-1)||!row.some(b=>b.x===t.x+1);
+}
 function random<T>(a:T[]){const out=[...a];for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out}
 export function order(board:Tile[]){let left=[...board];const seq:Tile[]=[];while(left.length){const t=random(left.filter(t=>free(t,left)))[0];if(!t)throw Error('Invalid geometry');seq.push(t);left=left.filter(b=>b.key!==t.key)}return seq}
 export function geometry(){const out:Tile[]=[];for(let z=0;z<3;z++){const w=z===2?2:4,h=z===0?6:2;for(let y=0;y<h;y++)for(let x=0;x<w;x++)out.push({key:out.length,x:x+(4-w)/2,y:y+(6-h)/2,z,pair:0,half:'a'})}return out}
