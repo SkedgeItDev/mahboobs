@@ -15,11 +15,24 @@ export function TileButton({tile:t,rack,playable,inspectable,hinted,visible,leve
  function blockedFeedback(){shake();onBlocked()}
  function down(e:PointerEvent<HTMLButtonElement>){if(!e.isPrimary||e.button!==0)return;suppressClick.current=false;if(!inspectable){if(!playable){blockedFeedback();suppressClick.current=true}return}onInspect(t.key);tileWidth.current=e.currentTarget.offsetWidth;gesture.current={id:e.pointerId,x:e.clientX,y:e.clientY,width:e.currentTarget.offsetWidth,dragging:false};e.currentTarget.setPointerCapture(e.pointerId)}
  function move(e:PointerEvent<HTMLButtonElement>){const start=gesture.current;if(!start||start.id!==e.pointerId)return;const peek=peekOffset(e.clientX-start.x,e.clientY-start.y,start.width,start.dragging);start.dragging=peek.dragging;if(peek.dragging){suppressClick.current=true;setOffset(peek.offset)}}
- function end(e:PointerEvent<HTMLButtonElement>){const start=gesture.current;if(start?.id!==e.pointerId)return;gesture.current=null;setOffset({x:0,y:0});if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);if(!playable&&!start.dragging){blockedFeedback();suppressClick.current=true}}
+ function resetGesture(){gesture.current=null;setOffset({x:0,y:0})}
+ function end(e:PointerEvent<HTMLButtonElement>){
+  const start=gesture.current;
+  if(start?.id!==e.pointerId)return;
+  resetGesture();
+  // Keep the browser's follow-up click from collecting a second tile.
+  suppressClick.current=true;
+  // Pointer capture can deliver pointerup after a drag or outside the tile.
+  if(start.dragging||Math.hypot(e.clientX-start.x,e.clientY-start.y)>=8)return;
+  if(playable)onSelect();else blockedFeedback();
+ }
+ function cancel(e:PointerEvent<HTMLButtonElement>){
+  if(gesture.current?.id===e.pointerId){resetGesture();suppressClick.current=true}
+ }
  const arrowKeys=['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'];
  function keyDown(e:KeyboardEvent<HTMLButtonElement>){if(inspectable&&arrowKeys.includes(e.key)){e.preventDefault();if(!e.repeat)onInspect(t.key);tileWidth.current=e.currentTarget.offsetWidth;const distance=tileWidth.current*1.15;setOffset({x:e.key==='ArrowLeft'?-distance:e.key==='ArrowRight'?distance:0,y:e.key==='ArrowUp'?-distance:e.key==='ArrowDown'?distance:0})}}
  useEffect(()=>{onPeek(t.key,{x:offset.x/tileWidth.current,y:offset.y/tileWidth.current})},[offset.x,offset.y]);
  const displaced=offset.x!==0||offset.y!==0;
  const bounds=tileBounds(t);
- return <button ref={button} aria-label={visible?`Pair ${t.pair} ${t.half==='a'?'left':'right'} half${rack?' in work area':playable?', playable':inspectable?', drag to inspect only':', covered'}`:'Face-down tile, covered'} disabled={rack} className={`tile ${playable?'free':'blocked'} ${inspectable?'inspectable':''} ${displaced?'peeking':''} ${hinted?'hinted':''} ${visible?'':'face-down'}`} style={rack?{}:{left:`${bounds.left}%`,top:`${bounds.top}%`,width:`${bounds.width}%`,height:`${bounds.height}%`,zIndex:displaced?80:t.z*10+1,transform:displaced?`translate(${offset.x}px, ${offset.y}px)`:undefined}} onPointerDown={down} onPointerMove={move} onPointerUp={end} onPointerCancel={end} onLostPointerCapture={()=>{gesture.current=null;setOffset({x:0,y:0})}} onKeyDown={keyDown} onKeyUp={e=>{if(arrowKeys.includes(e.key))setOffset({x:0,y:0})}} onBlur={()=>setOffset({x:0,y:0})} onClick={e=>{if(suppressClick.current&&e.detail!==0){suppressClick.current=false;e.preventDefault();return}if(e.detail===0)onInspect(t.key);if(playable)onSelect();else blockedFeedback()}}><span className={`tile-flipper ${visible?'':'flipped'}`} aria-hidden="true"><span className="tile-front"><img draggable={false} src={manifest[t.pair-1][t.half]} alt=""/></span><span className="tile-back"><img draggable={false} src={tileBackSrc(level)} alt="" onError={e=>{e.currentTarget.style.display='none'}}/><span className="back-emblem">◇</span></span></span></button>
+ return <button ref={button} aria-label={visible?`Pair ${t.pair} ${t.half==='a'?'left':'right'} half${rack?' in work area':playable?', playable':inspectable?', drag to inspect only':', covered'}`:'Face-down tile, covered'} disabled={rack} className={`tile ${playable?'free':'blocked'} ${inspectable?'inspectable':''} ${displaced?'peeking':''} ${hinted?'hinted':''} ${visible?'':'face-down'}`} style={rack?{}:{left:`${bounds.left}%`,top:`${bounds.top}%`,width:`${bounds.width}%`,height:`${bounds.height}%`,zIndex:displaced?80:t.z*10+1,transform:displaced?`translate(${offset.x}px, ${offset.y}px)`:undefined}} onPointerDown={down} onPointerMove={move} onPointerUp={end} onPointerCancel={cancel} onLostPointerCapture={cancel} onKeyDown={keyDown} onKeyUp={e=>{if(arrowKeys.includes(e.key))setOffset({x:0,y:0})}} onBlur={()=>setOffset({x:0,y:0})} onClick={e=>{if(suppressClick.current&&e.detail!==0){suppressClick.current=false;e.preventDefault();return}if(e.detail===0)onInspect(t.key);if(playable)onSelect();else blockedFeedback()}}><span className={`tile-flipper ${visible?'':'flipped'}`} aria-hidden="true"><span className="tile-front"><img draggable={false} src={manifest[t.pair-1][t.half]} alt=""/></span><span className="tile-back"><img draggable={false} src={tileBackSrc(level)} alt="" onError={e=>{e.currentTarget.style.display='none'}}/><span className="back-emblem">◇</span></span></span></button>
 }
