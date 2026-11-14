@@ -57,7 +57,9 @@ export default defineConfig({
             urlPattern: /\/images\/pairs\/.*\.(?:webp|png)$/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'mah-pair-art-runtime',
+              // CacheFirst keys on the URL. Bump this name when pair art bytes change
+              // or installed clients keep the previous file for maxAgeSeconds.
+              cacheName: 'mah-pair-art-runtime-v2',
               expiration: {
                 maxEntries: 48,
                 maxAgeSeconds: 60 * 60 * 24 * 14,
