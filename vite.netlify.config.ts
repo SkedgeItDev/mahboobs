@@ -32,12 +32,27 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // Precache the app shell + small UI. Do not precache the 50 pair WebP sets.
+        // Keep an offline shell without intercepting normal page navigations.
         globPatterns: ['**/*.{js,css,html,svg,ico,webmanifest}', 'icons/*.png'],
         globIgnores: ['**/images/pairs/**'],
-        navigateFallback: 'index.html',
+        // Give the offline HTML its own cache key. Otherwise precache routing
+        // wins before the network rule for /index.html and its aliases.
+        manifestTransforms: [async entries => ({
+          manifest: entries.map(entry => entry.url === 'index.html'
+            ? {...entry, url: 'index.html?offline-shell=1'}
+            : entry),
+          warnings: [],
+        })],
+        navigateFallback: null,
         cleanupOutdatedCaches: true,
         runtimeCaching: [
+          {
+            urlPattern: ({request, sameOrigin}) => sameOrigin && request.mode === 'navigate',
+            handler: 'NetworkOnly',
+            options: {
+              precacheFallback: {fallbackURL: 'index.html?offline-shell=1'},
+            },
+          },
           {
             urlPattern: /\/images\/pairs\/.*\.(?:webp|png)$/i,
             handler: 'CacheFirst',
