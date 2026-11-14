@@ -10,9 +10,9 @@ export function covers(upper:Tile,lower:Tile){
  return a.left<b.left+b.width&&b.left<a.left+a.width&&a.top<b.top+b.height&&b.top<a.top+a.height;
 }
 export function uncovered(t:Tile,board:Tile[]){return !board.some(b=>covers(b,t))}
-// Finish the current top layer before collecting tiles from a lower layer.
+// Only a higher tile overlapping this tile can block it from above.
 export function free(t:Tile,board:Tile[]){
- if(board.some(b=>b.z>t.z))return false;
+ if(!uncovered(t,board))return false;
  const row=board.filter(b=>b.z===t.z&&b.y===t.y);
  return !row.some(b=>b.x===t.x-1)||!row.some(b=>b.x===t.x+1);
 }
