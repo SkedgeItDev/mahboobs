@@ -1,10 +1,13 @@
-// Board coordinates are percentages of the felt, shared by rendering and move rules.
+// Project board positions onto the felt for rendering. Move rules use board units.
 export const BOARD_ASPECT=.54;
 const TILE_WIDTH=23;
 const TILE_ASPECT=1.24;
+const TILE_HEIGHT=TILE_WIDTH*TILE_ASPECT*BOARD_ASPECT;
+const STACK_LIFT=.8;
+const ROW_STEP=15.6;
 
 export function tileBounds({x,y,z}:{x:number,y:number,z:number}){
- return {left:x*24.1+2+z*.6,top:y*15.6+2-z*.8,width:TILE_WIDTH,height:TILE_WIDTH*TILE_ASPECT*BOARD_ASPECT};
+ return {left:x*24.1+2+z*.6,top:y*ROW_STEP+2-z*STACK_LIFT,width:TILE_WIDTH,height:TILE_HEIGHT};
 }
 
 export function fitTable(width:number,height:number){

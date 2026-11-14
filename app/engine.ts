@@ -1,16 +1,14 @@
 import {CONFIG} from './config';
-import {tileBounds} from './layout-fit';
 export {CONFIG} from './config';
 export type Resource='hint'|'undo'|'shuffle';
 export type Tile={key:number,x:number,y:number,z:number,pair:number,half:'a'|'b',hidden?:boolean};
 export const manifest=Array.from({length:CONFIG.librarySize},(_,i)=>{const n=String(i+1).padStart(2,'0');return {id:i+1,a:`/images/pairs/pair-${n}-a.webp`,b:`/images/pairs/pair-${n}-b.webp`,reveal:`/images/pairs/pair-${n}-reveal.webp`}});
+// Each tile occupies one board unit. Render offsets only show depth.
 export function covers(upper:Tile,lower:Tile){
- if(upper.z<=lower.z)return false;
- const a=tileBounds(upper),b=tileBounds(lower);
- return a.left<b.left+b.width&&b.left<a.left+a.width&&a.top<b.top+b.height&&b.top<a.top+a.height;
+ return upper.z>lower.z&&Math.abs(upper.x-lower.x)<1&&Math.abs(upper.y-lower.y)<1;
 }
 export function uncovered(t:Tile,board:Tile[]){return !board.some(b=>covers(b,t))}
-// Only a higher tile overlapping this tile can block it from above.
+// Only a higher tile sharing part of this board position can block it from above.
 export function free(t:Tile,board:Tile[]){
  if(!uncovered(t,board))return false;
  const row=board.filter(b=>b.z===t.z&&b.y===t.y);
