@@ -3,11 +3,15 @@ export const BOARD_ASPECT=.54;
 const TILE_WIDTH=23;
 const TILE_ASPECT=1.24;
 const TILE_HEIGHT=TILE_WIDTH*TILE_ASPECT*BOARD_ASPECT;
-const STACK_LIFT=.8;
 const ROW_STEP=15.6;
+const COLUMN_STEP=24.1;
+// Keep all three layers' depth offsets inside the gaps between board cells.
+// A raised rim must never cover the tap target in a neighboring row or column.
+const STACK_LIFT=(ROW_STEP-TILE_HEIGHT)/3;
+const STACK_SHIFT=(COLUMN_STEP-TILE_WIDTH)/3;
 
 export function tileBounds({x,y,z}:{x:number,y:number,z:number}){
- return {left:x*24.1+2+z*.6,top:y*ROW_STEP+2-z*STACK_LIFT,width:TILE_WIDTH,height:TILE_HEIGHT};
+ return {left:x*COLUMN_STEP+2+z*STACK_SHIFT,top:y*ROW_STEP+2-z*STACK_LIFT,width:TILE_WIDTH,height:TILE_HEIGHT};
 }
 
 export function fitTable(width:number,height:number){
