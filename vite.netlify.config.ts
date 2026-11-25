@@ -54,7 +54,7 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: /\/images\/pairs\/.*\.(?:webp|png)$/i,
+            urlPattern: /\/images\/pairs\/.*\.(?:webp|png)(?:\?|$)/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'mah-pair-art-runtime',

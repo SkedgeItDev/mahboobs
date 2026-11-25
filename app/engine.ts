@@ -2,7 +2,14 @@ import {CONFIG} from './config';
 export {CONFIG} from './config';
 export type Resource='hint'|'undo'|'shuffle';
 export type Tile={key:number,x:number,y:number,z:number,pair:number,half:'a'|'b',hidden?:boolean};
-export const manifest=Array.from({length:CONFIG.librarySize},(_,i)=>{const n=String(i+1).padStart(2,'0');return {id:i+1,a:`/images/pairs/pair-${n}-a.webp`,b:`/images/pairs/pair-${n}-b.webp`,reveal:`/images/pairs/pair-${n}-reveal.webp`}});
+// Keep the five replacements separate from older artwork in the PWA cache.
+const revisedPairs = new Set([28, 42, 44, 46, 50]);
+export const manifest = Array.from({length:CONFIG.librarySize}, (_, i) => {
+ const id = i + 1;
+ const base = `/images/pairs/pair-${String(id).padStart(2, '0')}`;
+ const revision = revisedPairs.has(id) ? '?v=20261125' : '';
+ return {id, a:`${base}-a.webp${revision}`, b:`${base}-b.webp${revision}`, reveal:`${base}-reveal.webp${revision}`};
+});
 // Each tile occupies one board unit. Render offsets only show depth.
 export function covers(upper:Tile,lower:Tile){
  return upper.z>lower.z&&Math.abs(upper.x-lower.x)<1&&Math.abs(upper.y-lower.y)<1;
